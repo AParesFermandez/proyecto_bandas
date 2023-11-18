@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ES">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Bandas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/styles.css') }}">
+</head>
+
+<body>
+    <main class="container">
+        <div class="row">
+            <h1 class="col-8"> Rock On Reggie Colt </h1>
+            <form class="col-2" action="/dashboard" method="GET">
+                <button class="btn btn-primary"> Dashboard</button>
+            </form>
+            <form class="col-2" action="/procesa/logout" method="POST">
+                <button class="btn btn-secondary">Logout</button>
+            </form>
+        </div>
+        <div class="bandas-usuario">
+            <h2>Mis Bandas</h2>
+            <div class="row">
+                <div class="col-6">
+                    <h3>Bandas Creadas</h3>
+                    <ul>
+                        {% for banda in bandas_del_usuario %}
+                            <li>
+                                {{ banda.nombre }}
+                                <a href="/editar/{{ banda.id }}" class="btn btn-primary">Editar</a>
+                                <form method="POST" action="/eliminar/banda/{{ banda.id }}">
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </form>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-6">
+                    <h3>Otras Bandas (como miembro)</h3>
+                    <ul>
+                        {% for banda in bandas_miembro %}
+                            <li>
+                                {{ banda.nombre }}
+                                <form method="POST" action="/salirse/{{ banda.id }}">
+                                    <button type="submit" class="btn btn-danger">Salirse de la Banda</button>
+                                </form>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

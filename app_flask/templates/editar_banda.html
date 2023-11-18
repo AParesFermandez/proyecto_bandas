@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ES">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Banda</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename='/css/styles.css')}}">
+</head>
+
+<body>
+    <main class="container">
+        <div class="row">
+            <h1 class="col-4"> Rock On Reggie Colt </h1>
+            <a class="col-2" href="/user/account">Mis Bandas</a>
+            <form class="col-2" action="/dashboard" method="GET">
+                <button class="btn btn-primary"> Dashboard</button>
+            </form>
+            <form class="col-2" action="/procesa/logout" method="POST">
+                <button class="btn btn-secondary">Logout</button>
+            </form>
+        </div>
+
+        <div class="row">
+            <h2 class="col-6">Editar banda {{ banda.nombre }}</h2>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="alert alert-info">
+            <ul>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="/editar/{{ banda.id }}">
+            <div class="mb-3">
+                <label for="banda" class="form-label">Nombre Banda</label>
+                <input type="text" class="form-control" id="banda" name="nombre" value="{{ banda.nombre }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="genero" class="form-label">Género Musical</label>
+                <input type="text" class="form-control" id="genero" name="genero" value="{{ banda.genero }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="ciudad" class="form-label">Ciudad de Origen</label>
+                <textarea class="form-control" id="ciudad" name="ciudad" rows="4" required>{{ banda.ciudad }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Actualizar</button>
+        </form>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
